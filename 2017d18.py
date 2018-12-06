@@ -1,5 +1,4 @@
 from collections import defaultdict
-import sys
 
 def regval(arg):
 	try:
@@ -36,10 +35,9 @@ while x < len(inst):
 			print("exit singing: {}".format(lastSound))
 			break
 	elif inst[x][0] == 'jgz':
-		if register[arg[0]]!=0:
+		if regval(arg[0])!=0:
 			print "jgz {}".format(regval(arg[1]))
 			x+= regval(arg[1])
 			x-=1 # because always increment
 	x+=1		
-
 

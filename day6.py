@@ -1,12 +1,5 @@
 from string import ascii_lowercase
 
-def flatten(seq, idx):
-	max = 0
-  	for el in seq:
-		if max < int(el[idx]):
-			max = int(el[idx])
-	return max
-
 names=ascii_lowercase
 labels = list(names)+[x+'2' for x in list(names)]
 
@@ -17,7 +10,7 @@ with open('./input6.txt') as fp:
 		inst.append(map(int,line.split(',')))
 		line = fp.readline().strip()
 print ("size: {}".format(len(inst)))
-gridsize = [flatten(inst, 0), flatten(inst, 1)]
+gridsize = [max(i[0] for i in inst), max(i[1] for i in inst)]
 print ("grid: {}".format(gridsize))
 
 fabric = [[0]*(gridsize[0]+2) for i in range(gridsize[1]+1)]  
