@@ -34,7 +34,7 @@ worker = [['', 0] for _ in range(5)]
 time = 0
 while True:
 	time += 1
-	print "time {} assignments: {}".format(time,[w[0] for w in worker])
+	print( "time {} assignments: {}".format(time,[w[0] for w in worker]))
 
 	c = []
 	# workers be workin'
@@ -43,14 +43,14 @@ while True:
 		if w[0] and w[1]>0:
 			w[1]-=1
 			if w[1]==0:
-				print "worker {} finished {}".format(worker.index(w),w[0])
+				print ("worker {} finished {}".format(worker.index(w),w[0]))
 				seq += w[0]
 				# unlock last job
 				if len(inst)==1:
-					print "takes last job {}".format(inst[0][1])
+					print ("takes last job {}".format(inst[0][1]))
 					w[0] = inst[0][1]
- 					w[1] = ascii_uppercase.index(inst[0][1])+1+60
- 					inst.remove(inst[0])
+					w[1] = ascii_uppercase.index(inst[0][1])+1+60
+					inst.remove(inst[0])
 				else:
 					inst = [x for x in inst if x[0] != w[0]]
 					w[0] = ''

@@ -7,7 +7,7 @@ inst = []
 with open('./input6.txt') as fp:
 	line = fp.readline().strip()
 	while line:
-		inst.append(map(int,line.split(',')))
+		inst.append(list(map(int,line.split(','))))
 		line = fp.readline().strip()
 print ("size: {}".format(len(inst)))
 gridsize = [max(i[0] for i in inst), max(i[1] for i in inst)]
@@ -26,8 +26,8 @@ for i in inst:
 
 
 # fill the rest of the grid
-for r in xrange(len(fabric)):
-	for c in xrange(len(fabric[r])):
+for r in range(len(fabric)):
+	for c in range(len(fabric[r])):
 	  	if fabric[r][c]==0:
 	  		closest = None
 	  		cdist = 999
@@ -62,8 +62,8 @@ maxindex = None
 for i in vitem:
 	area = 0
 	search = labels[inst.index(i)]
-	for r in xrange(len(fabric)):
-		for c in xrange(len(fabric[r])):
+	for r in range(len(fabric)):
+		for c in range(len(fabric[r])):
 			if fabric[r][c].lower() == search:
 				area += 1
 	#print("{} area is {}".format(search, area))
@@ -75,8 +75,8 @@ print("#1: index {} has area {}".format(maxindex,maxarea))
 #part 2
 
 regionSize = 0
-for r in xrange(len(fabric)):
-	for c in xrange(len(fabric[r])):
+for r in range(len(fabric)):
+	for c in range(len(fabric[r])):
 		totalDist = 0
 		for i in inst:
 			dist = abs(r-i[1])+abs(c-i[0])

@@ -1,9 +1,8 @@
-from sets import Set
 with open('./input1.txt') as fp:
     found = False
     cnt = 0
     loop = 0
-    freq = Set()
+    freq = set()
     while not found:
         fp.seek(0)
         line = fp.readline()

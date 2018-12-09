@@ -1,9 +1,8 @@
 from collections import Counter
-from sets import Set
 with open('./input2.txt') as fp:
     x = 0
     y = 0
-    s = Set()
+    s = set()
     line = fp.readline()
     while line:
         id = line.strip()
