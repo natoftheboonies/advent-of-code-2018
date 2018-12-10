@@ -1,5 +1,4 @@
 import re
-# help from: https://dbader.org/blog/python-linked-list
 
 def distance(sky, time):
 	distance = 0
@@ -14,8 +13,6 @@ def distance(sky, time):
 
 
 def printSky(sky, time):
-
-
 	for x in sky:
 		x[0][0] = x[0][0]+x[1][0]*time
 		x[0][1] = x[0][1]+x[1][1]*time
@@ -28,12 +25,12 @@ def printSky(sky, time):
 	grid = [['.'] * (maxX-minX+1) for _ in range(maxY-minY+1)]
 
 	for p in toPlot:
-		print "plot", p, "at", p[0]-minX, p[1]-minY
+		#print "plot", p, "at", p[0]-minX, p[1]-minY
 		grid[p[1]-minY][p[0]-minX] = '#'
 	for r in grid:
 		print ' '.join(r)
-	print "mins",minX,minY
-	print "max", maxX, maxY
+	#print "mins",minX,minY
+	#print "max", maxX, maxY
 
 
 d = []
@@ -46,18 +43,21 @@ with open('./input10.txt') as fp:
 
 #print d
 
-# smallest dist for input at 10391
+# smallest dist for input at 
+# determined manually by adjusting range & step :)
 lastDist = distance(d,0)
+time = 0
 for time in range(10390,10395, 1):
 	dist =  distance(d,time)
-	if dist <> lastDist:
-		print time, dist
+	if dist < lastDist:
 		lastDist = dist
 	else:
-		None#break
+		break
 
+print("#1: ")
+printSky(d, time-1)
 
-printSky(d, 10391)
+print("#2: {}".format(time-1))
 
 
 
