@@ -28,7 +28,7 @@ def printSky(sky, time):
 		#print "plot", p, "at", p[0]-minX, p[1]-minY
 		grid[p[1]-minY][p[0]-minX] = '#'
 	for r in grid:
-		print ' '.join(r)
+		print (' '.join(r))
 	#print "mins",minX,minY
 	#print "max", maxX, maxY
 
@@ -37,7 +37,7 @@ d = []
 with open('./input10.txt') as fp:
 	line = fp.readline().strip()
 	while line:
-		x = map(int,re.findall('(-?\d+)', line))
+		x = list(map(int,re.findall('(-?\d+)', line)))
 		d.append((x[:2],tuple(x[2:])))
 		line = fp.readline().strip()
 
