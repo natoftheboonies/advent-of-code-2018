@@ -1,6 +1,3 @@
-import re
-
-
 
 food = []
 state = []
@@ -94,5 +91,5 @@ for j in range(120,121):
 	for i in range(len(gen)):
 		if gen[i] == 1:
 			sum+=(adjust+i-offset[j])
-	print ("#2: ", sum)
+	print ("#2:", sum)
 
