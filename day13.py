@@ -11,9 +11,9 @@ def printgame(mine,carts):
 	m = ''
 	for n in range(100,len(mine[0])):
 		m += seq[n//100%10]
-	print m.rjust(width)	
-	print k.rjust(width)	
-	print h.rjust(width)
+	print(m.rjust(width))
+	print(k.rjust(width))	
+	print(h.rjust(width))
 	for y in range(len(mine)):
 		row = str(y)
 		for x in range(len(mine[y])):
@@ -25,7 +25,7 @@ def printgame(mine,carts):
 					break
 			if not found:
 				row+=mine[y][x]
-		print row.rjust(width)
+		print(row.rjust(width))
 	print
 
 mine = []
@@ -33,7 +33,6 @@ with open('./input13.txt') as fp:
 	line = fp.readline()
 	while line:
 		mine.append(list(line[:-1]))
-		print len(line)
 		line = fp.readline()
 
 # cart, (x,y), turn
@@ -53,8 +52,7 @@ for y in range(len(mine)):
 
 #printgame(mine,[])
 
-sorted(carts, key=lambda cart: cart[1][::-1])
-
+#sorted(carts, key=lambda cart: cart[1][::-1])
 #print("{} carts: {}".format(len(carts),carts))
 
 printgame(mine,carts)
@@ -77,7 +75,7 @@ while True:
 		elif c[0] == 'v':
 			c[1] = (c[1][0],c[1][1]+1)
 		else:
-			print "whodat? {} ".format(c[0])
+			print("whodat? {} ".format(c[0])) 
 		# junction
 		if mine[c[1][1]][c[1][0]]=='+':
 			#left
@@ -112,7 +110,7 @@ while True:
 			elif c[0]=='v':
 				c[0] = '>'				
 			else:
-				print "wha? {} for \\".format(c[0])
+				print("wha? {} for \\".format(c[0]))
 		elif mine[c[1][1]][c[1][0]] == '/':
 			if c[0]=='<':
 				c[0] = 'v'
@@ -123,20 +121,24 @@ while True:
 			elif c[0]=='v':
 				c[0] = '<'								
 			else:
-				print "wha? {} for /".format(c[0])				
+				print("wha? {} for /".format(c[0]))			
 		# detect crashes
 		for d in carts:
 			if d==c or d[0]=='X':
 				continue
 			elif d[1]==c[1]:
-				print "crash at {} at tick {}".format(c[1], t)
+				print("crash at {} at tick {}".format(c[1], t))
 				c[0] = 'X'
 				d[0] = 'X'
 				#printgame(mine,carts)
 				break
 	uncrashed = [c for c in carts if c[0] != 'X']
+
 	if len(uncrashed)==1:
 		last = uncrashed[0]
 		print("last cart at {} at tick {}".format(last[1], t))
+		break
+	elif len(uncrashed)==0:
+		print("all carts crashed :(")
 		break
 
