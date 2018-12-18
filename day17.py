@@ -49,7 +49,7 @@ def flow(dirt,y,x):
 
 clay = []
 
-with open('./input17.txt') as fp:
+with open('./sample17.txt') as fp:
 	line = fp.readline().strip()
 	while line:
 		x = map(int, re.split(r'\.\.',re.search(r'x=(\d+(\.\.)?\d*)', line).group(1)))
@@ -61,9 +61,10 @@ with open('./input17.txt') as fp:
 		clay.append((y, x))
 		line = fp.readline().strip()
 
-
-print("y range: {}..{}").format(min(y[0][0] for y in clay), max(y[0][1] for y in clay))
-print("x range: {}..{}").format(min(x[1][0] for x in clay), max(x[1][1] for x in clay))
+miny, maxy = min(y[0][0] for y in clay), max(y[0][1] for y in clay)
+minx, maxx = min(x[1][0] for x in clay), max(x[1][1] for x in clay)
+print("y range: {}..{}").format(miny, maxy)
+print("x range: {}..{}").format(minx, maxx)
 
 # y = 3 .. 1903
 # x = 368 .. 623
@@ -74,9 +75,9 @@ print("x range: {}..{}").format(min(x[1][0] for x in clay), max(x[1][1] for x in
 #width = 506-offset+2 
 
 # input y = 3..1903, x = 368..623
-offset = 368-1
-height = 1904
-width = 623-offset+2
+offset = minx-1
+height = maxy+1
+width = maxx-offset+2
 
 dirt = [['.'] * (width) for _ in range(height)]
 dirt[0][500-offset] = '+'
@@ -89,11 +90,13 @@ for yline, xline in clay:
 
 #printdirt(dirt)
 
-#printdirt(dirt)
-
 for _ in range(1000):
 	y,x = 1,500-offset
-	for coord in flow(dirt,y,x):
+	coords = flow(dirt,y,x)
+	if not coords:
+		print "never happens"
+		break
+	for coord in coords:
 		x, y = coord
 		dirt[y][x] = '|'
 	# flow to water
@@ -114,14 +117,14 @@ for _ in range(1000):
 							dirt[y][s]='~'
 
 
-#printdirt(dirt)
-f = open("day17out.txt", "w")
-for row in dirt:
-   f.write(''.join(row) + '\n')
+printdirt(dirt)
+#f = open("day17out.txt", "w")
+#for row in dirt:
+#   f.write(''.join(row) + '\n')
 
 count = 0
 count2 = 0
-for row in dirt[3:]:
+for row in dirt[miny:]:
 	for x in range(len(row)):
 		if row[x] == '~':
 			count+=1
