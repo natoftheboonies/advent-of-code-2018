@@ -1,7 +1,6 @@
 import re
-from collections import namedtuple
 
-army = ['Immune System', 'Infection']
+army = ['System', 'Infection']
 attack = ['fire', 'slashing', 'radiation', 'bludgeoning', 'cold']
 
 class Squad(object):
@@ -59,6 +58,7 @@ with open('input24.txt') as fp:
 			count += 1
 			units, hp, immune, weak, damage, attack, initiative = parse_line(line)
 			us = Squad(0, count, units, hp, immune, weak, damage, attack, initiative)
+			#print(0, count, units, hp, immune, weak, damage, attack, initiative)
 			igin.append(us)
 			line = fp.readline().strip()
 	line = fp.readline().strip()
@@ -69,6 +69,7 @@ with open('input24.txt') as fp:
 			count += 1
 			units, hp, immune, weak, damage, attack, initiative = parse_line(line)
 			us = Squad(1, count, units, hp, immune, weak, damage, attack, initiative)
+			#print(1, count, units, hp, immune, weak, damage, attack, initiative)
 			igin.append(us)
 			line = fp.readline().strip()
 	line = fp.readline().strip()		
@@ -77,8 +78,6 @@ with open('input24.txt') as fp:
 #Immune System:
 #17 units each with 5390 hit points (weak to radiation, bludgeoning) with an attack that does 4507 fire damage at initiative 2
 #989 units each with 1274 hit points (immune to fire; weak to bludgeoning, slashing) with an attack that does 25 slashing damage at initiative 3
-
-
 
 #ig.append((0,17, 5390, None, (2,3), 0,4507,2)) 
 #ig.append((0,989, 1274, 0, (1,3), 1,25,3))
@@ -95,9 +94,10 @@ def battle(input, boost):
 		damage = g.damage
 		if g.army==0: damage += boost
 		ig.append(Squad(g.army, g.id, g.units, g.hp, g.immunity, g.weakness, damage, g.attack, g.initiative))
+	loop = 0
 	while True:
 	#for _ in range(1):
-
+		loop+=1
 		ig = [g for g in ig if g.units > 0]
 		#for g in ig:
 		#	print("{} contains {} units".format(g, g.units))
@@ -124,8 +124,8 @@ def battle(input, boost):
 					if enemy.eff_power()>select.eff_power():
 						#print("selecting {} based on power {} vs.".format(enemy.id, enemy.eff_power()), select.id, select.eff_power())
 						select = enemy
-					# lower priority better
-					elif enemy.eff_power()==select.eff_power() and enemy.initiative < select.initiative:
+					# it chooses the defending group with the highest initiative!!!
+					elif enemy.eff_power()==select.eff_power() and enemy.initiative > select.initiative:
 						#print("selecting based on initiative")
 						select = enemy
 			if select:
@@ -135,7 +135,6 @@ def battle(input, boost):
 
 		#print()
 		attacking = sorted(ig, key=lambda g: g.initiative, reverse=True)
-
 		stalemate = True
 		for attacker in attacking:
 			if attacker.units == 0: continue
@@ -145,8 +144,7 @@ def battle(input, boost):
 			if killed > 0: stalemate = False
 			#print("{}: {} group {} attacks defending group {}, killing {} units".format(attacker.initiative, army[attacker.army], attacker.id, defender.id, killed))
 			defender.units -= killed
-		#for g in ig:
-		#	print (g.army, g.id, g.units)
+
 		#print()
 		if stalemate: 
 			print ("Stalemate!")
@@ -160,9 +158,13 @@ print ("#1:",result[0].army, sum([g.units for g in result]))
 boost = 1
 while True:
 	result = battle(igin, boost)
-	print ("pt2:",result[0].army,boost, sum([g.units for g in result]))
-	if all([g.army==0 for g in result]): break
-	boost += 1
-	if boost > 10000: break
+	if all([g.army==0 for g in result]): 
+		print ("#2: {} at boost {}".format(sum([g.units for g in result if g.army==0]), boost))
+		break
+	else:
+		print ("tried boost:", boost)
 	
+	boost += 1
+	if boost > 1000: break
+
 # wrong: 8694
